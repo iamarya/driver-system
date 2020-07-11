@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -15,12 +16,14 @@ public class Driver {
 	private String id;
 
 	@NotEmpty(message = "First name is empty")
+	@Pattern(regexp = "[A-Za-z0-9]*", message = "First name is invalid")
 	private String firstName;
 
 	@NotEmpty(message = "Last name is empty")
+	@Pattern(regexp = "[A-Za-z0-9]*", message = "Last name is invalid")
 	private String lastName;
 
-	@NotNull
+	@NotNull(message = "dateofBirth is empty")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dateofBirth;
 
