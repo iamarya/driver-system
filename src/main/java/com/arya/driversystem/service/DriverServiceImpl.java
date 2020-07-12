@@ -1,6 +1,7 @@
 package com.arya.driversystem.service;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.time.LocalDateTime;
@@ -24,9 +25,8 @@ public class DriverServiceImpl implements DriverService {
 
 	@Value("${ds.filename}")
 	String fileName;
-	
-	private static final Logger logger = LoggerFactory.getLogger(DriverServiceImpl.class);
 
+	private static final Logger logger = LoggerFactory.getLogger(DriverServiceImpl.class);
 
 	ReadWriteLock lock = new ReentrantReadWriteLock();
 
@@ -42,13 +42,16 @@ public class DriverServiceImpl implements DriverService {
 		BufferedReader br = null;
 		List<Driver> drivers = new ArrayList<>();
 		try {
-			br=new BufferedReader(new FileReader(fileName));
+			br = new BufferedReader(new FileReader(fileName));
 			String line;
 			while ((line = br.readLine()) != null) {
+				if(line==null || line.trim().isEmpty()) {
+					continue;
+				}
 				addDriverToList(date, drivers, line);
 			}
 
-		} catch(Exception e) {
+		} catch (Exception e) {
 			throw new CustomException("Exception while reading", e);
 		} finally {
 			readLock.unlock();
@@ -66,7 +69,7 @@ public class DriverServiceImpl implements DriverService {
 				drivers.add(driver);
 			}
 		} catch (Exception e) {
-			logger.error("Error while converting to object: "+ line , e);
+			logger.error("Error while converting to object: " + line, e);
 		}
 	}
 
@@ -74,15 +77,21 @@ public class DriverServiceImpl implements DriverService {
 	public void save(Driver driver) throws Exception {
 		Lock writeLock = lock.writeLock();
 		writeLock.lock();
-		FileWriter fw=null;
+		FileWriter fw = null;
 		try {
 			String id = Utils.generateUUID();
 			driver.setId(id);
 			driver.setCreationDate(LocalDateTime.now());
-			fw = new FileWriter(fileName, true);
-			fw.write(System.lineSeparator());
+			File fileio = new File(fileName);
+			if (fileio.exists()) {
+				fw = new FileWriter(fileio, true);
+			} else {
+				fileio.createNewFile();
+				fw = new FileWriter(fileio);
+			}
 			fw.write(Utils.getStringFromDriver(driver));
-		} catch(Exception e) {
+			fw.write(System.lineSeparator());
+		} catch (Exception e) {
 			throw new CustomException("Exception while writting", e);
 		} finally {
 			writeLock.unlock();

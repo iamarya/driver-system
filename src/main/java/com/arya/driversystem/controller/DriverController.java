@@ -17,6 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.arya.driversystem.model.Driver;
 import com.arya.driversystem.service.DriverService;
 
+/**
+ * 
+ * This class is the main controller of the application.
+ * @author arya
+ *
+ */
 @RestController
 public class DriverController {
 	@Autowired

@@ -11,6 +11,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+/**
+ * Thsi is the driver modle class
+ * 
+ * @author arya
+ *
+ */
 public class Driver {
 
 	private String id;

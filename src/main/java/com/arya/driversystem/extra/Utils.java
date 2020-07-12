@@ -7,10 +7,21 @@ import java.util.UUID;
 
 import com.arya.driversystem.model.Driver;
 
+/**
+ * 
+ * This is Util class which holds all util methods for the application
+ * @author arya
+ *
+ */
 public class Utils {
 
 	static final String SEPARATOR = ",";
 
+	/**
+	 * This method convert the string to Driver object
+	 * @param line
+	 * @return
+	 */
 	public static Driver getDriverFromString(String line) {
 		String[] fields = line.split(",");
 		Driver driver = new Driver();

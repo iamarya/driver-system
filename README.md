@@ -1,5 +1,5 @@
 # Driver System
-The designed system will manage driver details and REST services are exposed to interact with the server. Springboot is used and data is stored in simple file. To address the race condition in multithreading environment of file read and write ReentrantReadWriteLock is used. So reads are parallel and write will be synchronised.
+The designed system will manage driver details and REST services are exposed to interact with the server. Springboot is used and data is stored in a simple file. To address the race condition in multithreading environment of file read and write ReentrantReadWriteLock is used. So reads are parallel and write will be synchronised.
 Following steps are need to be done for running the application.
 ### Step 1
 To package the application and create a jar file run `mvn install`.
@@ -68,3 +68,26 @@ This API will give the details of the drivers after created the given time. Here
 curl -X GET \
   http://localhost:8080/drivers/byDate/2020-01-01T12:00:00Z 
 ```
+
+
+## Design
+As per the instruction simple file is taken to store the details of the driver.
+
+#### UUID
+To generate ID automatically UUID is used. Before storing the driver in file this id is generated and stored with the driver.
+
+
+#### Date format
+I have used two types of date format here. For the birthday field, I have used ISO.DATA format and for creation_date I have used ISO.DATA_TIME format. Both are ISO standard for data time. 
+
+#### ReentrantReadWriteLock (LOCK)
+ReentrantReadWriteLock is used to get the read and write lock. As I am not using the DB, to achieve consistency with the data I have implemented the logic so that writing can be happened by one thread at a time and if reading is happening then write will be in a wait state. Similarly, reading can happen parallel, but if writing is going on the reading will be in a wait state. 
+
+#### Exception Handeling/ Slf4j
+A global exception handler is written to address any exception occurring across the system. Slf4j is used for logging purpose. One custom exception is written to handling logical exceptions.
+
+
+## Future-Work
+If I will get more time I would like to think about the performance improvement side. For example, some cache framework (ex. Ehcache) can be used to store the records. If there is no record creation then no need to read file for every request. 
+Apart from this, If the file size is huge for example 5 GB or more, then the file can be read parallelly using ExecutorSerivce and results are collected finally. More thought process required here to maintain the consistency of the data.
+
