@@ -6,7 +6,9 @@ To package the application and create a jar file run `mvn install`.
 
 ### Step 2
 Run the below command to run the application. Pass the file path with a name for storing the driver details. The driver details are stored in comma-separated. A sample file is given inside the resource directory. But when started for 1st time, this file can be given empty and application will create new entries through API.
-```java -jar driversystem-0.0.1-SNAPSHOT.jar --ds.filename="C:/tmp/driver_details.csv"```
+```
+java -jar driversystem-0.0.1-SNAPSHOT.jar --ds.filename="C:/tmp/driver_details.csv"
+```
 
 ## Examples
 ### Create a driver
