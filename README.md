@@ -80,7 +80,7 @@ To generate ID automatically UUID is used. Before storing the driver in file thi
 
 
 #### Date format
-I have used two types of date format here. For the birthday field, I have used ISO.DATA format and for creation_date I have used ISO.DATA_TIME format. Both are ISO standard for data time. 
+I have used two types of date format here. For the birthday field, I have used ISO.DATE (yyyy-MM-dd) format and for creation_date I have used ISO.DATE_TIME (yyyy-MM-dd'T'HH:mm:ss'Z') format. Both are ISO standard for data time. 
 
 #### ReentrantReadWriteLock (LOCK)
 ReentrantReadWriteLock is used to get the read and write lock. As I am not using the DB, to achieve consistency with the data I have implemented the logic so that writing can be happened by one thread at a time and if reading is happening then write will be in a wait state. Similarly, reading can happen parallel, but if writing is going on the reading will be in a wait state. 
