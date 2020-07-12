@@ -1,12 +1,12 @@
 # Driver System
 The designed system will manage driver details and REST services are exposed to interact with the server. Springboot is used and data is stored in a simple file. To address the race condition in multithreading environment of file read and write ReentrantReadWriteLock is used. So reads are parallel and write will be synchronised.
-Following steps are need to be done for running the application.
+Following steps are need to be done for running the application. Make sure java 8 and maven is installed.
 ### Step 1
 To package the application and create a jar file run `mvn install`.
 
 ### Step 2
 Run the below command to run the application. Pass the file path with a name for storing the driver details. The driver details are stored in comma-separated. A sample file is given inside the resource directory. But when started for 1st time, this file can be given empty and application will create new entries through API.
-```driversystem-0.0.1-SNAPSHOT.jar --ds.filename="C:/tmp/driver_details.csv"```
+```java -jar driversystem-0.0.1-SNAPSHOT.jar --ds.filename="C:/tmp/driver_details.csv"```
 
 ## Examples
 ### Create a driver
