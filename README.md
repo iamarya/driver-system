@@ -85,7 +85,7 @@ I have used two types of date format here. For the birthday field, I have used I
 #### ReentrantReadWriteLock (LOCK)
 ReentrantReadWriteLock is used to get the read and write lock. As I am not using the DB, to achieve consistency with the data I have implemented the logic so that writing can be happened by one thread at a time and if reading is happening then write will be in a wait state. Similarly, reading can happen parallel, but if writing is going on the reading will be in a wait state. 
 
-#### Exception Handeling/ Slf4j
+#### Exception Handling and Logging
 A global exception handler is written to address any exception occurring across the system. Slf4j is used for logging purpose. One custom exception is written to handling logical exceptions.
 
 
